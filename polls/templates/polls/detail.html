@@ -1,0 +1,17 @@
+<form action="{% url 'polls:vote' question.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend><h1>{{ question.question_text }}</h1></legend>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+    </fieldset>
+    <input type="submit" value="Vote">
+    </form>
+
+    <!-- label : 이름을 보여주는 태그
+    form: 폼 태그 > radio
+    if error message : 에러가 생기면 에러 메세지를 보여준다. 에라가 발생하지 않는다면 메세지를 출력하지 않는다 
+    csrf token : 사이트 위조, 해킹 방지 목적 -->
